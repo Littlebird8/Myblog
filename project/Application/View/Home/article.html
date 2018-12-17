@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Content-Language" content="zh-CN" />
+	<title>www.myblog.com - 数量测试 - Powered by ITCAST</title>
+	<link rel="stylesheet"  href="./Public/style/default.css" type="text/css" media="all"/>
+	<script src="./Public/script/common.js" type="text/javascript"></script>
+</head>
+<body class="single article">
+<!-- top bar -->
+<div id="top">
+	<div class="center">
+    <div class="menu-left">
+    <ul>
+     <li><a href="javascript:;" onclick="setHomepage('');">设为首页</a></li>
+     <li><a href="javascript:;" >收藏本站</a></li>      
+    </ul>
+    </div>
+	 <div class="menu-right">
+    <ul id="info">
+        {if isset($smarty.session.user)}
+        <li>欢迎{$smarty.session.user.user_name}</li>
+        <li><a href="index.php?p=admin&c=login&a=logout">退出</a></li>  
+        {/if}
+        {if isset($smarty.session.user)}
+        <li><a href="index.php?p=admin&c=login&a=login" target="_blank">登录</a></li>
+        {/if}
+    </ul>
+    </div>
+   </div>	
+</div>
+  
+<div id="divAll">
+	<div id="divPage">
+	<div id="divMiddle">
+		<div id="divTop">
+			<h1 id="BlogTitle"><a href="">www.myblog.com</a></h1>
+			<h3 id="BlogSubTitle">Welcome to TQBlog!</h3>
+		</div>
+		<div id="divNavBar">
+			<ul>
+				<li id="nvabar-item-index"><a href="index.php?p=home&c=index&a=list">首页</a></li>
+                                <li id="navbar-page-2"><a href="?id=2">留言本</a></li>		</ul>
+		</div>
+
+		<div id="divMain">
+<div class="post single">
+	<h2 class="post-title">{$art_list['art_title']}</h2>
+	<div class="post-body">{$art_list['art_content']}</div>
+	<h5 class="post-tags"></h5>
+	<h6 class="post-footer">
+		阅读:{$art_list['art_read']}  | 
+                <a href="index.php?p=home&c=article&a=updown&up=1&art_id={$art_list['art_id']}">赞</a>:{$art_list['art_up']}
+                |<a href="index.php?p=home&c=article&a=updown&up=0&art_id={$art_list['art_id']}">踩</a>:{$art_list['art_down']}	</h6>
+</div>
+                    
+<!--分享-->
+<div class="bdsharebuttonbox"><a class="bds_more" href="#" data-cmd="more"></a><a title="分享到QQ空间" class="bds_qzone" href="#" data-cmd="qzone"></a><a title="分享到新浪微博" class="bds_tsina" href="#" data-cmd="tsina"></a><a title="分享到腾讯微博" class="bds_tqq" href="#" data-cmd="tqq"></a><a title="分享到人人网" class="bds_renren" href="#" data-cmd="renren"></a><a title="分享到微信" class="bds_weixin" href="#" data-cmd="weixin"></a></div>
+{literal}
+<script>
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+{/literal}
+<!--分享介绍-->
+<!--增加上一篇下一篇-->
+<div>
+    <a href='index.php?p=home&c=article&a=prenext&art_id={$art_list.art_id}&next=0'>上一篇</a>
+    <a href='index.php?p=home&c=article&a=prenext&art_id={$art_list.art_id}&next=1'>下一篇</a>
+</div>
+
+<label id="AjaxCommentBegin"></label>
+<!--评论输出-->
+<ul class="msg msghead">
+	<li class="tbname">评论列表:</li>
+</ul>
+{foreach $reply_list as $rows}
+<ul id="cmt1"  style="margin-left:{$rows['deep']*50}px">
+	<li class="msgname">
+           <img width="32" alt="" src="./Public/Uploads/{$rows['user_face']}" class="avatar">&nbsp;
+           <span class="commentname"><a target="_blank" rel="nofollow" href="">{$rows['user_name']}</a></span><br>
+           发布于&nbsp;{$rows['reply_time']|date_format:"%Y-%m-%d %H:%M:%S"}&nbsp;&nbsp;<span class="revertcomment"><a 
+ href="index.php?p=home&c=article&a=replyson&art_id={$art_list.art_id}&parent_id={$rows['reply_id']}">回复</a></span></li>
+	<li class="msgarticle">{$rows['reply_content']}<label id="AjaxComment1"></label> 
+	</li>
+</ul>
+{/foreach}
+
+
+<!--评论翻页条输出-->
+<div class="pagebar commentpagebar">
+</div>
+<label id="AjaxCommentEnd"></label>
+
+<!--评论框-->
+<div class="post" id="divCommentPost">
+	<p class="posttop"><a name="comment">{if isset($smarty.session.user)}{$smarty.session.user.user_name}{/if}发表评论:</a><a rel="nofollow" id="cancel-reply" href="#divCommentPost" style="display:none;"><small>取消回复</small></a></p>
+	<form id="frmSumbit"  method="post" action="index.php?p=home&c=article&a=reply&art_id={$art_list['art_id']}" >	
+            <p><textarea name="replay_content" id="txaArticle" class="text" cols="50" rows="4"  ></textarea></p>
+            <input type="hidden" name="a_id" value="comment"></input>
+            <p><input name="sumbit" type="submit"  value="提交"  class="button" /></p>
+        </form>
+	<p class="postbottom">☆欢迎发表您的看法、交流您的观点。</p>
+</div>
+		</div>
+		<div id="divBottom">
+        	<h3 id="BlogCopyRight">
+                                            	Copyright © 2008-2028 tqtqtq.com All Rights Reserved            </h3>
+			<h4 id="BlogPowerBy">Powered by <a href="http://www.tqtqtq.com/" title="TQBlog" target="_blank">TQBlog V2.0 Release 20140101</a></h4>
+		</div><div class="clear"></div>
+	</div><div class="clear"></div>
+	</div><div class="clear"></div>
+</div>
+</body>
+</html><!--86.655ms-->

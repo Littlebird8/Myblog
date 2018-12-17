@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<table border='1' width='980' bordercolor='#000000' align='center'>
+	<caption><h2>商品信息</h2><a href="index.php?c=products&a=collect&collect=add">添加商品</a></caption>
+	<tr align='center'>
+		<th>编号</th>
+		<th>商品名称</th>
+		<th>规格</th>
+		<th>价格</th>
+		<th>库存量</th>
+		<th>删除</th>
+                <th>修改</th>
+	</tr>
+	{foreach $list as $rows}
+	<tr align='center'>
+		<td>{$rows['proID']}</td>
+		<td>{$rows['proname']}</td>
+		<td>{$rows['proguige']}</td>
+		<td>{$rows['proprice']}</td>
+		<td>{$rows['proamount']}</td>
+		<td><a href="index.php?c=products&a=del&proid={$rows['proID']}">删除</a></td>
+		<td><a href="index.php?c=products&a=collect&collect=modify&proid={$rows['proID'] }">修改</a></td>
+	</tr>
+	{/foreach}
+</table>
+</body>

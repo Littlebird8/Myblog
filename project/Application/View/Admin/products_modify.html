@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<table border='1' width='380' bordercolor='#000000' align='center'>
+	<caption><h2><?php echo $type=='add'?'添加':'修改' ?>商品信息</h2></caption>
+	<form action="./index.php?c=products&a={$type}&proid={$proid|default:''}" method='post'>
+		{if $type=='modify'}
+			<tr align='center'>
+				<td>编号</td>
+				<td>{$proid}</td>
+			</tr>
+		{/if}
+		<tr align='center'>
+			<td>商品名称</td>
+			<td><input type="text" name='proname' value="{$info['proname']|default:''}"></td>
+		</tr>
+		<tr align='center'>
+			<td>规格</td>
+			<td><input type="text" name='proguige' value="{$info['proguige']|default:''}"></td>
+		</tr>
+		<tr align='center'>
+			<td>价格</td>
+			<td><input type="text" name='proprice' value="{$info['proprice']|default:''}"></td>
+		</tr>
+		<tr align='center'>
+			<td>库存量</td>
+			<td><input type="text" name='proamount' value="{$info['proamount']|default:''}"></td>
+		</tr>
+		<tr align='center'>
+			<td colspan='2'><input type="submit" value="{if $type=='add'}添加{elseif $type=='modify'}修改{/if}" name='btn'>
+							<input type="reset" value='重置'>
+			 </td>
+		</tr>
+	</form>
+	
+</table>
+</body>
+</html>
